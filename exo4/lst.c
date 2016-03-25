@@ -58,7 +58,7 @@ void afficherListe(Liste *liste)
 
 	while (actuel != NULL)
 	{
-		printf("nombre actuel : %d - adresse : %x - champs : %s ->\n"/*- contenu : %s ->\n "*/, actuel->nombre, &actuel->nombre, actuel->nombre/*, *actuel->nombre*/);
+		printf("nombre actuel : %d - adresse : %p - addrliste : %p - addrliste.premier : %p - liste.premier : %p->\n ", actuel->nombre, &actuel->nombre, &liste, &liste->premier, liste->premier);
 		actuel = actuel->suivant;
 	}
 	printf("NULL\n");
@@ -92,7 +92,7 @@ int main()
 	insertion(maListe, 6);
 	insertion(maListe, 9);
 	insertion(maListe, 18);
-	suppression(maListe);
+//	suppression(maListe);
 
 	afficherListe(maListe);
 
