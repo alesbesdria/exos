@@ -58,7 +58,7 @@ void afficherListe(Liste *liste)
 
 	while (actuel != NULL)
 	{
-		printf("%d -> ", actuel->nombre);
+		printf("nombre actuel : %d - adresse : %x - champs : %s ->\n"/*- contenu : %s ->\n "*/, actuel->nombre, &actuel->nombre, actuel->nombre/*, *actuel->nombre*/);
 		actuel = actuel->suivant;
 	}
 	printf("NULL\n");
