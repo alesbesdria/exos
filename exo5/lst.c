@@ -43,11 +43,23 @@ void insertion(Liste *liste, int nvNombre)
 	{
 		exit(EXIT_FAILURE);
 	}
+	if (liste->premier == NULL)
+	{
+		liste->dernier = nouveau;
+		liste->courant = nouveau;
+	}
 //3//ON MET nvNombre DANS NOMBRE.
 	nouveau->nombre = nvNombre;
 //4//PREMIER EST MAINTENANT DEVENU LE SUIVANT.
 	nouveau->suivant = liste->premier;
-//	nouveau->precedent = liste->dernier;
+	nouveau->precedent = NULL;
+	if (liste->premier != NULL)
+	{
+		liste->premier->precedent = nouveau;
+	}
+	nouveau->precedent = NULL;
+//5//ON REPLACE LE NOUVEAU EN PREMIER.
+	liste->premier = nouveau;
 //	nouveau->precedent = liste->premier;;
 //5//ON REPLACE LE NOUVEAU EN PREMIER.
 //	liste->premier = nouveau;
@@ -56,9 +68,9 @@ void insertion(Liste *liste, int nvNombre)
 //	liste->premier->precedent = liste->dernier;
 //	liste->dernier = nouveau->precedent;
 //	nouveau->precedent = nouveau;
-	nouveau->precedent = liste->dernier;
-	nouveau->precedent = liste->premier;
-	liste->premier = nouveau;
+//	nouveau->precedent = liste->dernier;
+//	nouveau->precedent = liste->premier;
+//	liste->premier = nouveau;
 }
 
 void afficherListeAvant(Liste *liste)
