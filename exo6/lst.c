@@ -97,8 +97,11 @@ void insertdebut(Liste *liste, int nvNombre)
 		exit(EXIT_FAILURE);
 	}
 	nouveau->nombre = nvNombre;
+
 	nouveau->suivant = liste->premier;
 	liste->premier = nouveau;
+	nouveau->suivant->precedent = nouveau;
+	nouveau->precedent = NULL;
 }
 
 void insertfin(Liste *liste, int nvNombre)
@@ -109,8 +112,11 @@ void insertfin(Liste *liste, int nvNombre)
 		exit(EXIT_FAILURE);
 	}
 	nouveau->nombre = nvNombre;
+
 	nouveau->precedent = liste->dernier;
 	liste->dernier = nouveau;
+	nouveau->precedent->suivant = nouveau;
+	nouveau->suivant = NULL;
 }
 
 void insertcourav(Liste *liste, int nvNombre)
@@ -125,10 +131,43 @@ void insertcourav(Liste *liste, int nvNombre)
 	{
 	nouveau->precedent = liste->courant->precedent;
 	liste->courant = nouveau;
-	}
+	nouveau->suivant->precedent = nouveau;
+	nouveau->precedent = nouveau->suivant;
 }
 
 void insertcourar(Liste *liste, int nvNombre)
+{
+	Element *nouveau = malloc(sizeof(Element));
+	if (liste == NULL || nouveau == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+	nouveau->nombre = nvNombre;
+	if (liste->courant->suivant != NULL)
+	{
+	nouveau->suivant = liste->courant->suivant;
+	liste->courant = nouveau;
+	nouveau->precedent->suivant = nouveau;
+	nouveau->suivant = nouveau->precedent;
+	}
+}
+
+void remplcourav(Liste *liste, int nvNombre)
+{
+	Element *nouveau = malloc(sizeof(Element));
+	if (liste == NULL || nouveau == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+	nouveau->nombre = nvNombre;
+	if (liste->courant->precedent != NULL)
+	{
+	nouveau->precedent = liste->courant->precedent;
+	liste->courant = nouveau;
+	}
+}
+
+void remplcourar(Liste *liste, int nvNombre)
 {
 	Element *nouveau = malloc(sizeof(Element));
 	if (liste == NULL || nouveau == NULL)
@@ -222,6 +261,7 @@ int main()
 	insertfin(maListe, 99);
 
 	afficherListeAvant(maListe);
+	printf("===\n");
 	afficherListeArriere(maListe);
 
 	courantavant(maListe);
@@ -230,14 +270,16 @@ int main()
 	printf("%d-", maListe->courant->nombre);
 	courantarriere(maListe);
 	
-	insertcourav(maListe, 666);
+	remplcourav(maListe, 666);
+//	insertcourav(maListe, 888);
 	
 	printf("%d-", maListe->courant->nombre);
 	courantarriere(maListe);
 	printf("%d-", maListe->courant->nombre);
 	courantarriere(maListe);
 
-	insertcourar(maListe, 999);
+	remplcourar(maListe, 999);
+//	insertcourar(maListe, 777);
 
 	printf("%d-", maListe->courant->nombre);
 	courantavant(maListe);
