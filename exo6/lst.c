@@ -89,6 +89,60 @@ void courantarriere(Liste *liste)
 	}
 }
 
+void insertdebut(Liste *liste, int nvNombre)
+{
+	Element *nouveau = malloc(sizeof(Element));
+	if (liste == NULL || nouveau == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+	nouveau->nombre = nvNombre;
+	nouveau->suivant = liste->premier;
+	liste->premier = nouveau;
+}
+
+void insertfin(Liste *liste, int nvNombre)
+{
+	Element *nouveau = malloc(sizeof(Element));
+	if (liste == NULL || nouveau == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+	nouveau->nombre = nvNombre;
+	nouveau->precedent = liste->dernier;
+	liste->dernier = nouveau;
+}
+
+void insertcourav(Liste *liste, int nvNombre)
+{
+	Element *nouveau = malloc(sizeof(Element));
+	if (liste == NULL || nouveau == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+	nouveau->nombre = nvNombre;
+	if (liste->courant->precedent != NULL)
+	{
+	nouveau->precedent = liste->courant->precedent;
+	liste->courant = nouveau;
+	}
+}
+
+void insertcourar(Liste *liste, int nvNombre)
+{
+	Element *nouveau = malloc(sizeof(Element));
+	if (liste == NULL || nouveau == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+	nouveau->nombre = nvNombre;
+	if (liste->courant->suivant != NULL)
+	{
+	nouveau->suivant = liste->courant->suivant;
+	liste->courant->suivant = nouveau;
+	}
+}
+
 void afficherListeAvant(Liste *liste)
 {
 //6//ON CREE UN ACTUEL POUR AFFICHER CHAQUE ELEMENTS JUSQU A NULL.
@@ -164,6 +218,9 @@ int main()
 	insertion(maListe, 18);
 //	suppression(maListe);
 
+	insertdebut(maListe,1);
+	insertfin(maListe, 99);
+
 	afficherListeAvant(maListe);
 	afficherListeArriere(maListe);
 
@@ -172,10 +229,16 @@ int main()
 	courantarriere(maListe);
 	printf("%d-", maListe->courant->nombre);
 	courantarriere(maListe);
+	
+	insertcourav(maListe, 666);
+	
 	printf("%d-", maListe->courant->nombre);
 	courantarriere(maListe);
 	printf("%d-", maListe->courant->nombre);
 	courantarriere(maListe);
+
+	insertcourar(maListe, 999);
+
 	printf("%d-", maListe->courant->nombre);
 	courantavant(maListe);
 	printf("%d-", maListe->courant->nombre);
