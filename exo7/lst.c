@@ -275,6 +275,58 @@ int	compteur(Liste *liste)
 	return (count);
 }
 
+void	supprdebut(Liste *liste)
+{
+	Element *aSupprimer;
+	if (liste->premier)
+	{
+		aSupprimer = liste->premier;
+		liste->premier->suivant->precedent = NULL;
+		liste->premier = liste->premier->suivant;
+		free(aSupprimer);
+	}
+}
+
+void	supprfin(Liste *liste)
+{
+	Element *aSupprimer;
+	if (liste->dernier)
+	{
+		aSupprimer = liste->dernier;
+		liste->dernier->precedent->suivant = NULL;
+		liste->dernier = liste->dernier->precedent;
+		free(aSupprimer);
+	}
+}
+
+void	supprcour(Liste *liste)
+{
+	Element *aSupprimer;
+	if (liste->courant == liste->premier)
+		supprdebut(liste);
+		else if (liste->courant == liste->dernier)
+			supprfin(liste);
+			else
+			{
+				aSupprimer = liste->courant;
+				liste->courant->suivant->precedent = liste->courant->precedent;
+				liste->courant->precedent->suivant = liste->courant->suivant;
+				free(aSupprimer);
+			}
+}
+
+void deplacecourprec(Liste *liste)
+{
+	if (liste->courant->precedent)
+		liste->courant = liste->courant->precedent;
+}
+
+void deplacecoursuiv(Liste *liste)
+{
+	if (liste->courant->suivant)
+		liste->courant = liste->courant->suivant;
+}
+
 int main()
 {
 	Liste *maListe = initialisation();
@@ -288,9 +340,19 @@ int main()
 	insertion(maListe, 9);
 	insertion(maListe, 18);
 //	suppression(maListe);
+	afficherListeAvant(maListe);
+	afficherListeArriere(maListe);
+	deplacecourprec(maListe);
+	deplacecourprec(maListe);
+	supprcour(maListe);
+	afficherListeAvant(maListe);
+	afficherListeArriere(maListe);
+	return 0;
+	supprfin(maListe);
 	printf("%d\n", compteur(maListe));
 
 	insertdebut(maListe,1);
+	supprcour(maListe);
 	insertfin(maListe, 99);
 
 	afficherListeAvant(maListe);
