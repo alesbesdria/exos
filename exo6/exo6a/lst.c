@@ -255,22 +255,31 @@ void suppression(Liste *liste)
 //***LIBERATION DE LISTE***//
 	free(liste);
 }
-/*
+
 int	compteur(Liste *liste)
 {
 	Element *cpt;
-	cpt->count = 0;
-//	liste->premier = count;
-	while (liste->dernier != NULL)
+	int count = 0;
+	cpt = liste->premier;
+	if (cpt)
 	{
-		cpt->count++;
+		while (cpt->suivant != NULL)
+		{
+			cpt = cpt->suivant;
+			count++;
+		}
+		count++;
 	}
-	return (cpt->count);
+	else
+		count = 0;
+	return (count);
 }
-*/
+
 int main()
 {
 	Liste *maListe = initialisation();
+	
+	printf("%d\n", compteur(maListe));
 
 	insertion(maListe, 4);
 	insertion(maListe, 8);
@@ -279,6 +288,7 @@ int main()
 	insertion(maListe, 9);
 	insertion(maListe, 18);
 //	suppression(maListe);
+	printf("%d\n", compteur(maListe));
 
 	insertdebut(maListe,1);
 	insertfin(maListe, 99);
@@ -310,7 +320,8 @@ int main()
 	courantavant(maListe);
 	printf("%d\n\n", maListe->courant->nombre);
 
-//	printf("%d\n", maListe->courant->count);
+	afficherListeAvant(maListe);
+	printf("%d\n", compteur(maListe));
 
 	return 0;
 }
