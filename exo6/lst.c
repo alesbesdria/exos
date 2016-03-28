@@ -129,10 +129,16 @@ void insertcourav(Liste *liste, int nvNombre)
 	nouveau->nombre = nvNombre;
 	if (liste->courant->precedent != NULL)
 	{
-	nouveau->precedent = liste->courant->precedent;
+/*	nouveau->precedent = liste->courant->precedent;
 	liste->courant = nouveau;
 	nouveau->suivant->precedent = nouveau;
 	nouveau->precedent = nouveau->suivant;
+	*/
+	nouveau->precedent = liste->courant->precedent;
+	liste->courant->precedent->suivant = nouveau;
+	nouveau->suivant = liste->courant;
+	liste->courant->precedent = nouveau;
+	}
 }
 
 void insertcourar(Liste *liste, int nvNombre)
@@ -146,9 +152,13 @@ void insertcourar(Liste *liste, int nvNombre)
 	if (liste->courant->suivant != NULL)
 	{
 	nouveau->suivant = liste->courant->suivant;
-	liste->courant = nouveau;
+/*	liste->courant = nouveau;
 	nouveau->precedent->suivant = nouveau;
 	nouveau->suivant = nouveau->precedent;
+*/
+	liste->courant->suivant->precedent = nouveau;
+	nouveau->precedent = liste->courant;
+	liste->courant->suivant = nouveau;
 	}
 }
 
@@ -271,7 +281,7 @@ int main()
 	courantarriere(maListe);
 	
 	remplcourav(maListe, 666);
-//	insertcourav(maListe, 888);
+	insertcourav(maListe, 888);
 	
 	printf("%d-", maListe->courant->nombre);
 	courantarriere(maListe);
@@ -279,7 +289,7 @@ int main()
 	courantarriere(maListe);
 
 	remplcourar(maListe, 999);
-//	insertcourar(maListe, 777);
+	insertcourar(maListe, 777);
 
 	printf("%d-", maListe->courant->nombre);
 	courantavant(maListe);
